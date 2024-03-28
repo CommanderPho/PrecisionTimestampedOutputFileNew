@@ -23,8 +23,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PROCESSORPLUGIN_H_DEFINED
 #define PROCESSORPLUGIN_H_DEFINED
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
+#include <chrono>
 #include <ProcessorHeaders.h>
 
+/*
+	The precise system timestamp is acquired on startRecording() and saved into the 'recordingStartTime' member variable
+	The main timestamp output occurs via:
+		String formattedRecordingStartTimeString = PhoDatetimeTimestampHelperSpace::formatPreciseFileTimeAsString(recordingStartTime);
+
+*/
 
 class ProcessorPlugin : public GenericProcessor
 {
@@ -70,6 +81,29 @@ public:
 	/** Load custom settings from XML. This method is not needed to load the state of
 		Parameter objects*/
 	void loadCustomParametersFromXml(XmlElement* parentElement) override;
+
+	protected:
+		void writeCustomTimestampFileIfNeeded();
+
+	private:
+		bool isProcessing;
+		bool isRecording;
+		bool hasRecorded;
+		// bool settingsNeeded;
+		// bool shouldRecord;
+
+		// File dataDirectory;
+		// File rootFolder;
+		bool needsWriteToCustomTimstampSyncFile;
+
+		int curr_experiment_number;
+		// int recordingNumber;
+		juce::int64 recordingStartSoftwareTimestamp;
+		// juce::int64 pluginUpdateFileTimeSoftwareTimestamp;
+		std::chrono::system_clock::time_point pluginInitializationTime;
+		std::chrono::system_clock::time_point recordingStartTime;
+
+		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorPlugin);
 
 };
 
