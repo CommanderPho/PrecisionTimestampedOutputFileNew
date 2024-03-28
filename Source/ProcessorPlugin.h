@@ -23,9 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PROCESSORPLUGIN_H_DEFINED
 #define PROCESSORPLUGIN_H_DEFINED
 
-#ifdef _WIN32
-#include <Windows.h>
-#endif
+//#ifdef _WIN32
+//#include <Windows.h> // This is what is causing the error
+//#endif
 
 #include <chrono>
 #include <ProcessorHeaders.h>
@@ -104,7 +104,6 @@ public:
 		std::chrono::system_clock::time_point recordingStartTime;
 
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorPlugin);
-
 };
 
 #endif

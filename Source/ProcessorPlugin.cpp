@@ -97,6 +97,7 @@ void ProcessorPlugin::updateSettings()
 
 void ProcessorPlugin::process(AudioBuffer<float>& buffer)
 {
+	//this->isProcessing = true;
     isProcessing = true;
     checkForEvents(true);
 
